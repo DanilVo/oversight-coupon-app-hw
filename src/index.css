@@ -5,7 +5,7 @@ body,
   margin: 0;
   padding: 0;
   text-align: center;
-  background-image: linear-gradient(gray, white);
+  background: radial-gradient(circle, #d2e1f8 0%, #d8e5f7 30%, #dce9fa 60%, #ffffff 100%);
 }
 
 a {
