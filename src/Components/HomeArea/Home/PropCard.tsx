@@ -31,15 +31,6 @@ export default function SignInCard() {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (emailError || passwordError) {
@@ -55,7 +46,6 @@ export default function SignInCard() {
 
   const validateInputs = () => {
     const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
 
     let isValid = true;
 
@@ -66,15 +56,6 @@ export default function SignInCard() {
     } else {
       setEmailError(false);
       setEmailErrorMessage("");
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
     }
 
     return isValid;
@@ -135,18 +116,14 @@ export default function SignInCard() {
                 whiteSpace: "nowrap",
                 padding: "0px 25px",
               }}
+              onClick={validateInputs}
             >
               Apply Coupon
             </Button>
           </Stack>
         </FormControl>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          onClick={validateInputs}
-        >
+        <Button type="submit" fullWidth variant="contained">
           Buy Now
         </Button>
       </Box>

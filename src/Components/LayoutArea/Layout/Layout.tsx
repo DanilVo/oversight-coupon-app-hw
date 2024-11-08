@@ -1,19 +1,18 @@
 import Header from "../Header/Header";
-import Menu from "../Menu/Menu";
-import Routing from "../Routing/Routing";
+import Routing from "../Router/Routes";
 import "./Layout.css";
 
 function Layout(): JSX.Element {
-    return (
-        <div className="Layout">
-            <header>
-                <Header />
-            </header>
-            <main>
-                <Routing />
-            </main>
-        </div>
-    );
+  return (
+    <div className="Layout">
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Routing />
+      </main>
+    </div>
+  );
 }
 
-export default Layout
+export default Layout;

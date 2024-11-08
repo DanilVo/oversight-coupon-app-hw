@@ -1,37 +1,37 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Juliet Oma",
+      "id": "1",
+      "firstName": "Juliet",
+      "lastName": "Oma",
       "email": "julie@yahoo.com",
-      "number": "08100000000",
       "userType": "Admin"
     },
     {
-      "id": 2,
-      "name": "James Williams",
+      "id": "2",
+      "firstName": "James ",
+      "lastName": "Williams",
       "email": "jameswilly@gmail.com",
-      "number": "08111111111",
       "userType": "user"
     },
     {
-      "id": 3,
-      "name": "Danil Volobuyev",
+      "id": "3",
+      "firstName": "Danil",
+      "lastName": "Volobuyev",
       "email": "dani736@gmail.com",
-      "number": "09022222222",
       "userType": "user"
     },
     {
-      "id": 4,
-      "name": "Grace Funsho",
+      "id": "4",
+      "firstName": "Grace",
+      "lastName": "Funsho",
       "email": "gracefunsho@gmail.com",
-      "number": "09033333333",
       "userType": "user"
     }
   ],
   "coupons": [
     {
-      "id": 1,
+      "id": "1",
       "description": "Rami levy",
       "usageLimit": 1,
       "stackable": true,
@@ -39,9 +39,19 @@
       "discountType": "percentage",
       "creationDate": "01.12.2024",
       "uniqueCode": "UUID"
+    },
+    {
+      "id": "2",
+      "description": "Shufer-Sal",
+      "usageLimit": 2,
+      "stackable": false,
+      "expiryDate": "31.01.2025",
+      "discountType": "amount",
+      "creationDate": "01.11.2024",
+      "uniqueCode": "UUID"
     }
   ],
-  "isLoggedIn":{
+  "isLoggedIn": {
     "loggedIn": true,
     "isAdmin": true
   }

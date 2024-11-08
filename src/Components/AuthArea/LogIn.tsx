@@ -1,15 +1,16 @@
 import {
   Box,
+  Card,
   FormControl,
   FormLabel,
   TextField,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import MuiCard from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
-import { styled } from "@mui/material/styles";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import CredentialsModel from "../../Models/CredentialsModel";
 
 const modalStyle = {
   position: "absolute",
@@ -18,31 +19,15 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-};
-
-const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  alignSelf: "center",
-  width: "100%",
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: "auto",
-  [theme.breakpoints.up("sm")]: {
-    maxWidth: "450px",
-  },
-  boxShadow:
-    "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
-  ...theme.applyStyles("dark", {
-    boxShadow:
-      "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
-  }),
-}));
+};
 
 export default function LogInModal() {
+  const { register, handleSubmit } = useForm<CredentialsModel>();
+
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -52,35 +37,33 @@ export default function LogInModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
-    }
-
-    return isValid;
+  async function login(credentials: CredentialsModel) {
+    console.log(credentials);
+    
+    // const email = document.getElementById("email") as HTMLInputElement;
+    // const password = document.getElementById("password") as HTMLInputElement;
+    // let isValid = true;
+    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    //   setEmailError(true);
+    //   setEmailErrorMessage("Please enter a valid email address.");
+    //   isValid = false;
+    // } else {
+    //   setEmailError(false);
+    //   setEmailErrorMessage("");
+    // }
+    // if (!password.value || password.value.length < 6) {
+    //   setPasswordError(true);
+    //   setPasswordErrorMessage("Password must be at least 6 characters long.");
+    //   isValid = false;
+    // } else {
+    //   setPasswordError(false);
+    //   setPasswordErrorMessage("");
+    // }
+    // return isValid;
   };
 
   return (
-    <div>
+    <Box>
       <Button
         onClick={handleOpen}
         sx={{ bgcolor: "orange" }}
@@ -104,7 +87,7 @@ export default function LogInModal() {
           </Typography>
           <Box
             component="form"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit(login)}
             noValidate
             sx={{
               display: "flex",
@@ -118,6 +101,7 @@ export default function LogInModal() {
                 Email
               </FormLabel>
               <TextField
+                {...register("email")}
                 error={emailError}
                 helperText={emailErrorMessage}
                 id="email"
@@ -138,6 +122,7 @@ export default function LogInModal() {
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
+                {...register("password")}
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 name="password"
@@ -155,13 +140,12 @@ export default function LogInModal() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign in
             </Button>
           </Box>
         </Card>
       </Modal>
-    </div>
+    </Box>
   );
 }
