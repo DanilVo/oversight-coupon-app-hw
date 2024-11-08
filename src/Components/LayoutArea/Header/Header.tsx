@@ -1,14 +1,14 @@
 import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  Paper,
-  Toolbar,
-  Typography,
+    AppBar,
+    Box,
+    Container,
+    Paper,
+    Toolbar,
+    Typography
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/oneItemShop-logo-removebg-preview.png";
+import LogInModal from "../../AuthArea/LogIn";
 import "./Header.css";
 
 function Header(): JSX.Element {
@@ -46,14 +46,7 @@ function Header(): JSX.Element {
             <Typography variant="body2" color="black">
               welcome: user.email
             </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "orange",
-              }}
-            >
-              Login
-            </Button>
+            <LogInModal/>
           </Paper>
         </Toolbar>
       </Container>

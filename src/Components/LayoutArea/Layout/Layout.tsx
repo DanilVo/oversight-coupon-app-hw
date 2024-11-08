@@ -9,9 +9,6 @@ function Layout(): JSX.Element {
             <header>
                 <Header />
             </header>
-            <aside>
-                <Menu />
-            </aside>
             <main>
                 <Routing />
             </main>
