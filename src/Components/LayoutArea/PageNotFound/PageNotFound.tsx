@@ -1,11 +1,11 @@
 import "./PageNotFound.css";
-import legoImage from "../../../Assets/lego.png"
+import notFound from "../../../Assets/bg-404.png";
 
 function PageNotFound(): JSX.Element {
     return (
         <div className="PageNotFound">
             <h2>404 Page not found</h2>
-            {/* <img src={legoImage} /> */}
+            <img src={notFound} />
         </div>
     );
 }

@@ -4,25 +4,45 @@
       "id": 1,
       "name": "Juliet Oma",
       "email": "julie@yahoo.com",
-      "number": "08100000000"
+      "number": "08100000000",
+      "userType": "Admin"
     },
     {
       "id": 2,
       "name": "James Williams",
       "email": "jameswilly@gmail.com",
-      "number": "08111111111"
+      "number": "08111111111",
+      "userType": "user"
     },
     {
       "id": 3,
-      "name": "Ahmed Ali",
-      "email": "ahmedali012@gmail.com",
-      "number": "09022222222"
+      "name": "Danil Volobuyev",
+      "email": "dani736@gmail.com",
+      "number": "09022222222",
+      "userType": "user"
     },
     {
       "id": 4,
       "name": "Grace Funsho",
       "email": "gracefunsho@gmail.com",
-      "number": "09033333333"
+      "number": "09033333333",
+      "userType": "user"
     }
-  ]
+  ],
+  "coupons": [
+    {
+      "id": 1,
+      "description": "Rami levy",
+      "usageLimit": 1,
+      "stackable": true,
+      "expiryDate": "31.12.2024",
+      "discountType": "percentage",
+      "creationDate": "01.12.2024",
+      "uniqueCode": "UUID"
+    }
+  ],
+  "isLoggedIn":{
+    "loggedIn": true,
+    "isAdmin": true
+  }
 }

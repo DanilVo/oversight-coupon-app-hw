@@ -2,7 +2,7 @@
     height: 100%;
     display: grid;
     box-sizing: border-box;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 9% 91%;
     grid-template-columns: repeat(6, 1fr);
 }
 
