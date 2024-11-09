@@ -5,75 +5,101 @@ import {
   FormLabel,
   TextField,
   Typography,
-} from "@mui/material";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import CredentialsModel from "../../Models/CredentialsModel";
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import CredentialsModel from '../../Models/CredentialsModel';
+import authService from '../../Services/AuthService';
+import notificationService from '../../Services/NotificationService';
 
 const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
-  display: "flex",
-  flexDirection: "column",
+  display: 'flex',
+  flexDirection: 'column',
 };
 
-export default function LogInModal() {
+interface Props {
+  setUserInSystem: Function;
+  userInSystem: boolean;
+}
+
+export default function LogIn(props: Props) {
+  const navigate = useNavigate();
+
   const { register, handleSubmit } = useForm<CredentialsModel>();
 
   const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/home');
+  };
 
   async function login(credentials: CredentialsModel) {
-    console.log(credentials);
-    
-    // const email = document.getElementById("email") as HTMLInputElement;
-    // const password = document.getElementById("password") as HTMLInputElement;
-    // let isValid = true;
-    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-    //   setEmailError(true);
-    //   setEmailErrorMessage("Please enter a valid email address.");
-    //   isValid = false;
-    // } else {
-    //   setEmailError(false);
-    //   setEmailErrorMessage("");
-    // }
-    // if (!password.value || password.value.length < 6) {
-    //   setPasswordError(true);
-    //   setPasswordErrorMessage("Password must be at least 6 characters long.");
-    //   isValid = false;
-    // } else {
-    //   setPasswordError(false);
-    //   setPasswordErrorMessage("");
-    // }
-    // return isValid;
-  };
+    try {
+      await authService.logIn(credentials);
+      props.setUserInSystem(true);
+    } catch (error) {
+      console.log('error');
+
+      notificationService.error('something went wrong');
+    }
+    const email = document.getElementById('email') as HTMLInputElement;
+    const password = document.getElementById('password') as HTMLInputElement;
+    let isValid = true;
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter a valid email address.');
+      isValid = false;
+    } else {
+      setEmailError(false);
+      setEmailErrorMessage('');
+      handleClose();
+    }
+    if (!password.value || password.value.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
+      handleClose();
+    }
+    return isValid;
+  }
 
   return (
     <Box>
       <Button
-        onClick={handleOpen}
-        sx={{ bgcolor: "orange" }}
+        onClick={() => {
+          handleOpen();
+          navigate('/home/login');
+        }}
+        sx={{ bgcolor: 'orange' }}
         variant="contained"
       >
         LogIn
       </Button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={() => {
+          handleClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -81,7 +107,7 @@ export default function LogInModal() {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
+            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
             Sign in
           </Typography>
@@ -90,18 +116,18 @@ export default function LogInModal() {
             onSubmit={handleSubmit(login)}
             noValidate
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
               gap: 2,
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email" sx={{ display: "flex" }}>
+              <FormLabel htmlFor="email" sx={{ display: 'flex' }}>
                 Email
               </FormLabel>
               <TextField
-                {...register("email")}
+                {...register('email')}
                 error={emailError}
                 helperText={emailErrorMessage}
                 id="email"
@@ -113,16 +139,16 @@ export default function LogInModal() {
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? "error" : "primary"}
-                sx={{ ariaLabel: "email" }}
+                color={emailError ? 'error' : 'primary'}
+                sx={{ ariaLabel: 'email' }}
               />
             </FormControl>
             <FormControl>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
-                {...register("password")}
+                {...register('password')}
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 name="password"
@@ -133,14 +159,10 @@ export default function LogInModal() {
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? "error" : "primary"}
+                color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
+            <Button type="submit" fullWidth variant="contained">
               Sign in
             </Button>
           </Box>

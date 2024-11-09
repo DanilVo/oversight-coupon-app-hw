@@ -2,7 +2,7 @@ import { legacy_createStore as createStore } from "redux";
 import UserModel from "../Models/UserModel";
 
 class CouponState {
-  users: UserModel[] = [];
+  coupons: UserModel[] = [];
 }
 
 enum CouponActionTypes {

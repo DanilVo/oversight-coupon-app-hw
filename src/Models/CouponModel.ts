@@ -6,5 +6,6 @@ export default class CouponModel {
   public discountType: string
   public expiryDate: Date
   public creationDate: Date
+  public createdBy: number
   public uniqueCode: string
 }

@@ -15,8 +15,12 @@ function Routing(): JSX.Element {
 
         <Route path="/add" element={<Add />} />
 
+        <Route path="/home/login" element={<Home />} />
+
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+
         {/* Default Route */}
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<Navigate to="/home" />} /> 
 
         {/* Page not found Route*/}
         <Route path="*" element={<PageNotFound />} />

@@ -3,5 +3,5 @@ export default class UserModel {
   public firstName: string;
   public lastName: string;
   public email: string;
-  public userType: string;
+  public password: string;
 }
