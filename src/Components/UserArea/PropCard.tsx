@@ -26,7 +26,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   borderRadius: "10px",
 }));
 
-export default function SignInCard() {
+export default function PropCard() {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);

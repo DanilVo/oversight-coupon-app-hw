@@ -1,11 +1,12 @@
 export default class CouponModel {
   public id: number;
-  public description: string
-  public usageLimit: number
-  public stackable: boolean
-  public discountType: string
-  public expiryDate: Date
-  public creationDate: Date
-  public createdBy: number
-  public uniqueCode: string
+  public description: string;
+  public usageLimit: number;
+  public stackable: boolean;
+  public discountType: string;
+  public expiryDate: Date;
+  public creationDate: Date;
+  public createdBy: number;
+  public uniqueCode: string;
+  public valid: boolean;
 }

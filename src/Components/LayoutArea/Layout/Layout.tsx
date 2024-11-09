@@ -12,7 +12,7 @@ function Layout(): JSX.Element {
 
   useEffect(() => {
     if (!localStorageUser) return;
-    setUserInfo(JSON.parse(atob(localStorageUser)));
+    // setUserInfo(JSON.parse(atob(localStorageUser)));
     console.log(userInSystem);
     setUserInSystem(true)
     

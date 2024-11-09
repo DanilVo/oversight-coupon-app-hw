@@ -21,14 +21,22 @@ interface Props {
 
 function Header(props: Props): JSX.Element {
   const navigate = useNavigate();
-  // const storage = atob(JSON.parse(localStorage.getItem('token')));
+  const storage = localStorage.getItem('token');
   const [user, setUser] = useState<UserModel>();
 
   const userInfo: UserModel = authStore.getState().user;
-  // console.log(userInfo);
+
   useEffect(() => {
-    setUser(userInfo);
-    console.log(user);
+    if (!userInfo) {
+      setUser(null);
+      return;
+    }
+    if (userInfo) {
+      setUser(userInfo);
+      console.log(user);
+    } else {
+      setUser(JSON.parse(atob(storage)));
+    }
   }, [props.userInSystem]);
 
   return (

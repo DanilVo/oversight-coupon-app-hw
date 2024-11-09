@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import AllReports from '../../DashboardArea/AllReports/AllReports';
+import Add from '../../DataArea/Add/Add';
+import List from '../../DataArea/List/List';
 import Home from '../../HomeArea/Home/Home';
 import PageNotFound from '../PageNotFound/PageNotFound';
-import List from '../../DataArea/List/List';
-import Add from '../../DataArea/Add/Add';
 
 function Routing(): JSX.Element {
   return (
@@ -17,10 +18,10 @@ function Routing(): JSX.Element {
 
         <Route path="/home/login" element={<Home />} />
 
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+        <Route path="/dashboard" element={<AllReports />} />
 
         {/* Default Route */}
-        <Route path="/" element={<Navigate to="/home" />} /> 
+        <Route path="/" element={<Navigate to="/home" />} />
 
         {/* Page not found Route*/}
         <Route path="*" element={<PageNotFound />} />

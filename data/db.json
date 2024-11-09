@@ -25,7 +25,8 @@
       "discountType": "percentage",
       "creationDate": "01.12.2024",
       "createdBy": "2",
-      "uniqueCode": "UUID"
+      "uniqueCode": "123456qwerty",
+      "valid": "yes"
     },
     {
       "id": "2",
@@ -36,11 +37,8 @@
       "discountType": "amount",
       "creationDate": "01.11.2024",
       "createdBy": "1",
-      "uniqueCode": "UUID"
+      "uniqueCode": "qwerty123456",
+      "valid": "no"
     }
-  ],
-  "isLoggedIn": {
-    "loggedIn": true,
-    "isAdmin": true
-  }
+  ]
 }

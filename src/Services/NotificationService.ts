@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 class NotificationService {
   public success(message: string): void {
     toast.success(message, {
-      position: "top-right",
+      position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -17,14 +17,14 @@ class NotificationService {
   public error(err: string): void {
     const message = this.extractErrorMessage(err);
     toast.error(message, {
-      position: "top-right",
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: 'light',
     });
   }
 

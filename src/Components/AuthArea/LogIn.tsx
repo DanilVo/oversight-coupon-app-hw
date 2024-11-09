@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import CredentialsModel from '../../Models/CredentialsModel';
 import authService from '../../Services/AuthService';
 import notificationService from '../../Services/NotificationService';
+import { authStore } from '../../Redux/AuthState';
 
 const modalStyle = {
   position: 'absolute',
@@ -53,47 +54,62 @@ export default function LogIn(props: Props) {
   async function login(credentials: CredentialsModel) {
     try {
       await authService.logIn(credentials);
+      notificationService.success('Welcome aboard')
       props.setUserInSystem(true);
+      handleClose();
+      navigate('/dashboard')
     } catch (error) {
-      console.log('error');
+      console.log(error);
 
       notificationService.error('something went wrong');
     }
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-    let isValid = true;
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-      handleClose();
-    }
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-      handleClose();
-    }
-    return isValid;
+
+
+    
+    // const email = document.getElementById('email') as HTMLInputElement;
+    // const password = document.getElementById('password') as HTMLInputElement;
+    // let isValid = true;
+    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    //   setEmailError(true);
+    //   setEmailErrorMessage('Please enter a valid email address.');
+    //   isValid = false;
+    // } else {
+    //   setEmailError(false);
+    //   setEmailErrorMessage('');
+    // }
+    // if (!password.value || password.value.length < 6) {
+    //   setPasswordError(true);
+    //   setPasswordErrorMessage('Password must be at least 6 characters long.');
+    //   isValid = false;
+    // } else {
+    //   setPasswordError(false);
+    //   setPasswordErrorMessage('');
+    // }
+    // return isValid;
   }
+
+  const handleLogout = () => {
+    authService.logout();
+    props.setUserInSystem(false);
+    console.log(authStore.getState().user);
+    
+    navigate('/home');
+  };
 
   return (
     <Box>
       <Button
-        onClick={() => {
-          handleOpen();
-          navigate('/home/login');
-        }}
+        onClick={
+          !props.userInSystem
+            ? () => {
+                handleOpen();
+              }
+            : handleLogout
+        }
         sx={{ bgcolor: 'orange' }}
         variant="contained"
       >
-        LogIn
+        {props.userInSystem ? 'LogOut' : 'Login'}
       </Button>
       <Modal
         open={open}

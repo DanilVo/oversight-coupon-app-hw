@@ -1,19 +1,20 @@
 import { legacy_createStore as createStore } from "redux";
-import UserModel from "../Models/UserModel";
+import CouponModel from "../Models/CouponModel";
 
 class CouponState {
-  coupons: UserModel[] = [];
+  coupons: CouponModel[] = [];
 }
 
-enum CouponActionTypes {
-  Login = "Login",
-  Logout = "Logout",
-  NewUser = "NewUser",
+export enum CouponActionTypes {
+  SetCoupons = 'SetCoupons',
+  AddCoupon = 'AddCoupon',
+  UpdateCoupon = 'UpdateCoupon',
+  DeleteCoupon = 'DeleteCoupon',
 }
 
-interface CouponAction {
+export interface CouponAction {
   type: CouponActionTypes;
-  payload?: unknown;
+  payload?: any;
 }
 
 function couponReducer(
@@ -23,15 +24,20 @@ function couponReducer(
   const newState = { ...currentState };
 
   switch (action.type) {
-    case CouponActionTypes.Login:
+    case CouponActionTypes.SetCoupons:
+      newState.coupons = action.payload;
       break;
 
-    case CouponActionTypes.Logout:
+    case CouponActionTypes.AddCoupon:
       break;
 
-    case CouponActionTypes.NewUser:
+    case CouponActionTypes.UpdateCoupon:
+      break;
+
+    case CouponActionTypes.DeleteCoupon:
       break;
   }
+  return newState
 }
 
 export const couponStore = createStore(couponReducer);
