@@ -1,15 +1,16 @@
-import { legacy_createStore as createStore } from 'redux';
-import CouponModel from '../Models/CouponModel';
+import { legacy_createStore as createStore } from "redux";
+import CouponModel from "../Models/CouponModel";
+import moment from "moment";
 
 class CouponState {
   coupons: CouponModel[] = [];
 }
 
 export enum CouponActionTypes {
-  SetCoupons = 'SetCoupons',
-  AddCoupon = 'AddCoupon',
-  UpdateCoupon = 'UpdateCoupon',
-  DeleteCoupon = 'DeleteCoupon',
+  SetCoupons = "SetCoupons",
+  AddCoupon = "AddCoupon",
+  UpdateCoupon = "UpdateCoupon",
+  DeleteCoupon = "DeleteCoupon",
 }
 
 export interface CouponAction {
@@ -25,6 +26,14 @@ function couponReducer(
 
   switch (action.type) {
     case CouponActionTypes.SetCoupons:
+      newState.coupons.forEach((coupon, index) => {
+        newState.coupons[index].creationDate = moment(
+          coupon.creationDate
+        ).format("YYYY-MM-DD");
+        newState.coupons[index].expiryDate = moment(coupon.expiryDate).format(
+          "YYYY-MM-DD"
+        );
+      });
       newState.coupons = action.payload;
       break;
 
@@ -36,19 +45,21 @@ function couponReducer(
       }
       break;
 
-    case CouponActionTypes.UpdateCoupon:
+    case CouponActionTypes.UpdateCoupon: {
       const couponToUpdate = newState.coupons.findIndex(
         (c) => c.id === action.payload.id
       );
       newState.coupons[couponToUpdate] = action.payload;
       break;
+    }
 
-    case CouponActionTypes.DeleteCoupon:
+    case CouponActionTypes.DeleteCoupon: {
       const couponToDelete = newState.coupons.findIndex(
-        (c) => c.id === action.payload
+        (c) => +c.id === action.payload
       );
-      newState.coupons.splice(couponToDelete, 1);
+      setTimeout(() => newState.coupons.splice(couponToDelete, 1), 1000);
       break;
+    }
   }
   return newState;
 }

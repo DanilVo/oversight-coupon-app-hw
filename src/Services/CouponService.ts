@@ -38,11 +38,11 @@ class CouponService {
   
   public async deleteCoupon(couponId: number): Promise<void> {
     await axios.delete(appConfig.couponsUrl + couponId);
-    const action: CouponAction = {
-      type: CouponActionTypes.DeleteCoupon,
-      payload: couponId,
-    };
-    couponStore.dispatch(action);
+      const action: CouponAction = {
+        type: CouponActionTypes.DeleteCoupon,
+        payload: couponId,
+      };   
+      couponStore.dispatch(action);
   }
 }
 
