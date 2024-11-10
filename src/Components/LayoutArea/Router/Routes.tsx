@@ -4,6 +4,7 @@ import Add from '../../DataArea/Add/Add';
 import List from '../../DataArea/List/List';
 import Home from '../../HomeArea/Home/Home';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import { authStore } from '../../../Redux/AuthState';
 
 function Routing(): JSX.Element {
   return (
@@ -18,7 +19,12 @@ function Routing(): JSX.Element {
 
         <Route path="/home/login" element={<Home />} />
 
-        <Route path="/dashboard" element={<AllReports />} />
+        <Route
+          path="/dashboard"
+          element={
+            authStore.getState().user ? <AllReports /> : <PageNotFound />
+          }
+        />
 
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/home" />} />

@@ -28,11 +28,11 @@ export default function FilteringGrid() {
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        // columns={columns}
+        editMode='row'
         slots={{ toolbar: GridToolbar }}
         slotProps={{
           toolbar: {
-            showQuickFilter: true,
+            showQuickFilter: true, 
           },
         }}
       />
