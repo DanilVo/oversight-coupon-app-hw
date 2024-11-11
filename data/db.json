@@ -13,56 +13,76 @@
       "lastName": "Volobuyev",
       "email": "dani736@gmail.com",
       "password": "UnRydG5yZjE5"
+    },
+    {
+      "id": "96828b7e-575e-4818-b4a9-6bf86747757d",
+      "password": "b160ab54-b",
+      "firstName": "Danil",
+      "lastName": "Volobuyev",
+      "email": "dani736@gmail.com"
     }
   ],
   "coupons": [
+    {
+      "id": "1",
+      "description": "Rami levy123",
+      "usageLimit": 1,
+      "stackable": "true",
+      "expiryDate": "2024-12-31",
+      "discountType": "percentage",
+      "creationDate": "2024-01-12",
+      "createdBy": "2",
+      "uniqueCode": "123456qwerty",
+      "amount": 20
+    },
     {
       "id": "2",
       "description": "Shufer-Sal",
       "usageLimit": 2,
       "stackable": false,
-      "expiryDate": "01.31.2025",
+      "expiryDate": "2025-01-31",
       "discountType": "amount",
-      "creationDate": "01.11.2024",
+      "creationDate": "2024-01-11",
       "createdBy": "1",
       "uniqueCode": "qwerty123456",
-      "valid": "no"
+      "amount": 20
     },
     {
       "id": "3",
-      "description": "Mega Discount",
+      "description": "Mega Discount1",
       "usageLimit": 5,
-      "stackable": true,
-      "expiryDate": "03.15.2025",
+      "stackable": false,
+      "expiryDate": "2025-03-15",
       "discountType": "percentage",
-      "creationDate": "01.12.2024",
+      "creationDate": "2024-01-12",
       "createdBy": "2",
       "uniqueCode": "mega456789",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "4",
       "description": "Super-Pharm",
       "usageLimit": 1,
       "stackable": false,
-      "expiryDate": "04.10.2025",
+      "expiryDate": "2025-04-10",
       "discountType": "amount",
-      "creationDate": "01.13.2024",
+      "creationDate": "2024-01-13",
       "createdBy": "3",
       "uniqueCode": "superph123",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "5",
       "description": "Electro-Deals",
       "usageLimit": 3,
-      "stackable": true,
-      "expiryDate": "02.28.2025",
+      "stackable": "true",
+      "expiryDate": "2025-02-28",
       "discountType": "percentage",
-      "creationDate": "01.14.2024",
+      "creationDate": "2024-01-14",
       "createdBy": "1",
       "uniqueCode": "elec789456",
-      "valid": "no"
+      "valid": false,
+      "amount": 20
     },
     {
       "id": "6",
@@ -74,7 +94,7 @@
       "creationDate": "01.15.2024",
       "createdBy": "2",
       "uniqueCode": "foodmar123",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "7",
@@ -86,7 +106,7 @@
       "creationDate": "01.16.2024",
       "createdBy": "3",
       "uniqueCode": "books789101",
-      "valid": "no"
+      "amount": 20
     },
     {
       "id": "8",
@@ -98,7 +118,7 @@
       "creationDate": "01.17.2024",
       "createdBy": "1",
       "uniqueCode": "petslove456",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "9",
@@ -110,7 +130,7 @@
       "creationDate": "01.18.2024",
       "createdBy": "2",
       "uniqueCode": "green123abc",
-      "valid": "no"
+      "amount": 20
     },
     {
       "id": "10",
@@ -122,7 +142,7 @@
       "creationDate": "01.19.2024",
       "createdBy": "3",
       "uniqueCode": "travdeal456",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "11",
@@ -134,7 +154,7 @@
       "creationDate": "01.20.2024",
       "createdBy": "1",
       "uniqueCode": "fit789xyz",
-      "valid": "yes"
+      "amount": 20
     },
     {
       "id": "12",
@@ -146,7 +166,132 @@
       "creationDate": "01.21.2024",
       "createdBy": "2",
       "uniqueCode": "gadget00123",
-      "valid": "no"
+      "amount": 20
+    },
+    {
+      "id": "d9efffee-03e1-4c2b-86c6-4b1922b56480",
+      "creationDate": "2024-11-11",
+      "createdBy": "2",
+      "uniqueCode": "dad3f5d2-c5b1-40a7-8c2c-7206a67d977c",
+      "description": "test CRTUD 123",
+      "expiryDate": "2024-11-12",
+      "usageLimit": 2,
+      "stackable": "false",
+      "discountType": "amount"
+    },
+    {
+      "id": "669c4b43-c319-4fe8-b018-901af22c0de7",
+      "description": "tesst",
+      "expiryDate": "2024-11-10",
+      "usageLimit": 2,
+      "amount": 23,
+      "stackable": true,
+      "discountType": "percentage"
+    },
+    {
+      "id": "07585deb-c049-4343-b301-9b91c3b08c73",
+      "description": "tesst123",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-10",
+      "createdBy": "2",
+      "usageLimit": 2,
+      "amount": 23,
+      "uniqueCode": "da1d9ac3-80d2-4b92-8f2c-12287502071c",
+      "stackable": true,
+      "discountType": "percentage"
+    },
+    {
+      "id": "5721c164-188a-4449-8f7d-7315baee4186",
+      "description": "qwerty123",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-12",
+      "createdBy": "2",
+      "usageLimit": 3,
+      "amount": 12,
+      "uniqueCode": "c66285cf-0ed4-4495-8050-8b429069a3e6",
+      "stackable": true,
+      "discountType": "percentage"
+    },
+    {
+      "id": "4dca9417-14a2-429f-b4ca-3412f985f338",
+      "description": "qwerty4567",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-27",
+      "createdBy": "2",
+      "usageLimit": 2,
+      "amount": 12,
+      "uniqueCode": "f970a421-5e7d-425d-b7c7-eb9233c799a6",
+      "stackable": false,
+      "discountType": "amount"
+    },
+    {
+      "id": "e78ec7eb-0a17-4e33-810a-53247ea3bf4e",
+      "description": "test",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-14",
+      "createdBy": "2",
+      "usageLimit": 2,
+      "amount": 11,
+      "uniqueCode": "83895f02-1e9c-4583-8a76-b5e48d331d78",
+      "stackable": true,
+      "discountType": "amount"
+    },
+    {
+      "id": "50ca987c-f9de-44fe-aad8-f2e7e386ac21",
+      "description": "test CRTUD1234",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-25",
+      "createdBy": "2",
+      "usageLimit": 2,
+      "amount": 22,
+      "uniqueCode": "bb785cfd-3f76-43ae-b437-7d4ae55f24c1",
+      "stackable": true,
+      "discountType": "amount"
+    },
+    {
+      "id": "e5d4a852-c852-4dae-80f8-ff5057441785",
+      "description": "Shufer-Sal1123123123",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-16",
+      "createdBy": "2",
+      "usageLimit": 2,
+      "amount": 11,
+      "uniqueCode": "84c00720-191b-4657-9c31-4fd128016cb6",
+      "stackable": true,
+      "discountType": "percentage"
+    },
+    {
+      "id": "1b9ccf5e-92fa-4865-8c25-a313b82b717f",
+      "description": "Rami levy123123123123",
+      "creationDate": "2024-11-11",
+      "expiryDate": "2024-11-07",
+      "createdBy": "2",
+      "usageLimit": 12,
+      "amount": 22,
+      "uniqueCode": "7366fcd4-c017-40f8-b63d-53f02ced245b",
+      "stackable": false,
+      "discountType": "percentage"
+    },
+    {
+      "id": "1834ca30-c933-447c-a05c-c5ce457807dd",
+      "description": "test CRTUD123123123",
+      "expiryDate": "2024-11-26",
+      "usageLimit": 18,
+      "amount": 33,
+      "stackable": true,
+      "discountType": "amount"
+    },
+    {
+      "id": "d6891b53-9423-4aac-882b-a4b8ff3f581e",
+      "creationDate": "2024-11-11",
+      "createdBy": "2",
+      "uniqueCode": "94968b65-1b5e-4f98-8fc8-4e6c000d74bc",
+      "description": "Rami levy123321",
+      "expiryDate": "2024-11-26",
+      "usageLimit": 18,
+      "amount": 12,
+      "stackable": true,
+      "discountType": "percentage"
     }
   ]
 }

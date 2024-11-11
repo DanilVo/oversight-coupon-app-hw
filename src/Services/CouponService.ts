@@ -1,48 +1,44 @@
-import axios from 'axios';
-import appConfig from '../Utils/AppConfig';
-import {
-  CouponAction,
-  CouponActionTypes,
-  couponStore,
-} from '../Redux/CouponsState';
-import CouponModel from '../Models/CouponModel';
+import axios from "axios";
+import CouponModel from "../Models/CouponModel";
+import appConfig from "../Utils/AppConfig";
+import moment from "moment";
 
 class CouponService {
   public async getAllCoupons(): Promise<CouponModel[]> {
     const { data } = await axios.get(appConfig.couponsUrl);
-    const action: CouponAction = {
-      type: CouponActionTypes.SetCoupons,
-      payload: data,
-    };
-    couponStore.dispatch(action);
+    data.forEach((d: CouponModel) => {
+      d.valid = moment().isBefore(d.expiryDate) && d.usageLimit > 0;
+    });
     return data;
   }
 
   public async addCoupon(coupon: CouponModel): Promise<void> {
-    const { data } = await axios.post(appConfig.couponsUrl, coupon);
-    const action: CouponAction = {
-      type: CouponActionTypes.AddCoupon,
-      payload: data,
-    };
-    couponStore.dispatch(action);
+    await axios.post(appConfig.couponsUrl, coupon);
   }
 
-  public async updateCoupon(coupon: CouponModel): Promise<void> {
-    const { data } = await axios.put(appConfig.couponsUrl, coupon);
-    const action: CouponAction = {
-      type: CouponActionTypes.UpdateCoupon,
-      payload: data,
-    };
-    couponStore.dispatch(action);
+  public async updateCoupon(
+    coupon: CouponModel,
+    couponId: number
+  ): Promise<void> {
+    await axios.patch(appConfig.couponsUrl + couponId, coupon);
   }
-  
-  public async deleteCoupon(couponId: number): Promise<void> {
+
+  public async updateCoupons(coupons: CouponModel[]): Promise<void> {
+    for (const coupon of coupons) {
+      await axios.patch(appConfig.couponsUrl + coupon.id, {
+        ...coupon,
+        usageLimit: coupon.usageLimit - 1,
+      });
+    }
+  }
+
+  public async deleteCoupon(couponId: string): Promise<void> {
     await axios.delete(appConfig.couponsUrl + couponId);
-      const action: CouponAction = {
-        type: CouponActionTypes.DeleteCoupon,
-        payload: couponId,
-      };   
-      couponStore.dispatch(action);
+  }
+
+  public async getCoupon(couponId: string): Promise<CouponModel> {
+    const { data } = await axios.get(appConfig.couponsUrl + couponId);
+    return data;
   }
 }
 

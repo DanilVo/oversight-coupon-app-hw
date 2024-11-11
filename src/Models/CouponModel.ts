@@ -1,5 +1,6 @@
 export default class CouponModel {
-  public id: number;
+  public id: string;
+  public amount: number;
   public description: string;
   public usageLimit: number;
   public stackable: boolean;

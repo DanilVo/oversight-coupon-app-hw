@@ -5,67 +5,67 @@ import {
   FormLabel,
   TextField,
   Typography,
-} from '@mui/material';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import CredentialsModel from '../../Models/CredentialsModel';
-import authService from '../../Services/AuthService';
-import notificationService from '../../Services/NotificationService';
-import { authStore } from '../../Redux/AuthState';
+} from "@mui/material";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import CredentialsModel from "../../Models/CredentialsModel";
+import authService from "../../Services/AuthService";
+import notificationService from "../../Services/NotificationService";
+import { authStore } from "../../Redux/AuthState";
+import UserModel from "../../Models/UserModel";
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  display: 'flex',
-  flexDirection: 'column',
+  display: "flex",
+  flexDirection: "column",
 };
 
-interface Props {
-  setUserInSystem: Function;
-  userInSystem: boolean;
-}
+/*
+  Functionality that is presented in this component: 
+  - Login
+*/
 
-export default function LogIn(props: Props) {
+export default function LogIn() {
   const navigate = useNavigate();
+
+  const userInfo: UserModel = authStore.getState().user;
 
   const { register, handleSubmit } = useForm<CredentialsModel>();
 
   const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    navigate('/home');
+    navigate("/home");
   };
 
   async function login(credentials: CredentialsModel) {
     try {
       await authService.logIn(credentials);
-      notificationService.success('Welcome aboard')
-      props.setUserInSystem(true);
+      notificationService.success("Welcome aboard");
       handleClose();
-      navigate('/dashboard')
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
 
-      notificationService.error('something went wrong');
+      notificationService.error("something went wrong");
     }
 
-
-    
     // const email = document.getElementById('email') as HTMLInputElement;
     // const password = document.getElementById('password') as HTMLInputElement;
     // let isValid = true;
@@ -90,32 +90,21 @@ export default function LogIn(props: Props) {
 
   const handleLogout = () => {
     authService.logout();
-    props.setUserInSystem(false);
-    console.log(authStore.getState().user);
-    
-    navigate('/home');
+    navigate("/home");
   };
 
   return (
     <Box>
       <Button
-        onClick={
-          !props.userInSystem
-            ? () => {
-                handleOpen();
-              }
-            : handleLogout
-        }
-        sx={{ bgcolor: 'orange' }}
+        onClick={userInfo ? handleLogout : handleOpen}
+        sx={{ bgcolor: "orange" }}
         variant="contained"
       >
-        {props.userInSystem ? 'LogOut' : 'Login'}
+        {userInfo ? "LogOut" : "Login"}
       </Button>
       <Modal
         open={open}
-        onClose={() => {
-          handleClose();
-        }}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -123,7 +112,7 @@ export default function LogIn(props: Props) {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
             Sign in
           </Typography>
@@ -132,18 +121,18 @@ export default function LogIn(props: Props) {
             onSubmit={handleSubmit(login)}
             noValidate
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
               gap: 2,
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email" sx={{ display: 'flex' }}>
+              <FormLabel htmlFor="email" sx={{ display: "flex" }}>
                 Email
               </FormLabel>
               <TextField
-                {...register('email')}
+                {...register("email")}
                 error={emailError}
                 helperText={emailErrorMessage}
                 id="email"
@@ -155,16 +144,16 @@ export default function LogIn(props: Props) {
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'email' }}
+                color={emailError ? "error" : "primary"}
+                sx={{ ariaLabel: "email" }}
               />
             </FormControl>
             <FormControl>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
-                {...register('password')}
+                {...register("password")}
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 name="password"
@@ -175,7 +164,7 @@ export default function LogIn(props: Props) {
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? 'error' : 'primary'}
+                color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             <Button type="submit" fullWidth variant="contained">

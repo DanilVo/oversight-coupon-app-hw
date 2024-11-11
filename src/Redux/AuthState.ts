@@ -1,14 +1,15 @@
-import { legacy_createStore as createStore } from 'redux';
-import UserModel from '../Models/UserModel';
+import { legacy_createStore as createStore } from "redux";
+import UserModel from "../Models/UserModel";
 
 class AuthState {
-  public user: UserModel = null ;
+  public user: UserModel = null;
 }
 
 export enum AuthActionTypes {
-  Login = 'Login',
-  Logout = 'Logout',
-  NewUser = 'NewUser',
+  Login = "Login",
+  Logout = "Logout",
+  NewUser = "NewUser",
+  GetUser = "GetUser",
 }
 
 export interface AuthAction {
@@ -23,31 +24,32 @@ function authReducer(
   const newState = { ...currentState };
 
   switch (action.type) {
-    case AuthActionTypes.Login:      
-      const userPayload = action.payload.data.find(
-        (u: UserModel) =>
-          u.password === btoa(action.payload.password) &&
-        u.email === action.payload.email
-      );
-      if (userPayload) {
-        const { id, password, ...userWithoutSensitiveInfo } = userPayload;
-        newState.user = userWithoutSensitiveInfo;
-        
-        const token = btoa(JSON.stringify(newState.user))
-        localStorage.setItem('token', token);
-      }
+    case AuthActionTypes.Login: {
+      delete action.payload[0].password;
+      newState.user = action.payload[0];
+      const token = btoa(JSON.stringify(newState.user));
+      localStorage.setItem("token", token);
       break;
+    }
+
+    case AuthActionTypes.GetUser: {
+      delete action.payload.password;
+      newState.user = action.payload;
+      console.log("redux " +newState); 
+      
+      break;
+    }
 
     case AuthActionTypes.Logout:
       newState.user = null;
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       break;
 
     case AuthActionTypes.NewUser:
       break;
   }
 
-  return newState
+  return newState;
 }
 
 export const authStore = createStore(authReducer);

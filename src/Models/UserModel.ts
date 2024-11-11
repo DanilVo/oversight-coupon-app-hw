@@ -1,5 +1,5 @@
 export default class UserModel {
-  public id: number;
+  public id: string;
   public firstName: string;
   public lastName: string;
   public email: string;

@@ -5,12 +5,16 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
 
 import { styled } from "@mui/material/styles";
 
-import { Divider, Stack } from "@mui/material";
+import { Divider, Stack, Tooltip } from "@mui/material";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import CouponModel from "../../Models/CouponModel";
+import couponService from "../../Services/CouponService";
+import notificationService from "../../Services/NotificationService";
+import moment from "moment";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -27,39 +31,90 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function PropCard() {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const originalPrice = 100;
+  const [updatedPriceState, setUpdatedPriceState] =
+    useState<number>(originalPrice);
+  const { register, handleSubmit, resetField } = useForm();
+  const [appliedCoupons, setAppliedCoupons] = useState<CouponModel[]>([]);
+  const [priceBeforeCoupon, setPriceBeforeCoupon] =
+    useState<number>(originalPrice);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+  // const [emailError, setEmailError] = useState(false);
+  // const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  // const [passwordError, setPasswordError] = useState(false);
+  // const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+
+  const applyCoupon = async (values: { [couponId: string]: string }) => {
+    try {
+      const couponData = await fetchCouponData(values.couponId);
+      if (!validateCoupon(couponData)) return;
+
+      const updatedPrice = calculateUpdatedPrice(couponData);
+      updateStateWithNewCoupon(couponData, updatedPrice);
+    } catch (error) {
+      notificationService.error("An error occurred while applying the coupon.");
+      console.error(error);
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
   };
 
-  const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
-    }
-
-    return isValid;
+  const fetchCouponData = async (couponId: string) => {
+    const couponData: CouponModel = await couponService.getCoupon(couponId);
+    return couponData;
   };
+
+  const validateCoupon = (couponData: CouponModel): boolean => {
+    const isCouponValid =
+      moment().isBefore(couponData.expiryDate) && couponData.usageLimit > 0;
+    if (!isCouponValid) {
+      notificationService.error("Coupon is not valid!");
+      return false;
+    }
+    if (appliedCoupons.length > 1 && !couponData.stackable) {
+      notificationService.error("Coupon is not stackable!");
+      return false;
+    }
+    if (isCouponAlreadyApplied(couponData)) {
+      notificationService.error("Coupon was already applied!");
+      return false;
+    }
+    return true;
+  };
+
+  const isCouponAlreadyApplied = (couponData: CouponModel): boolean => {
+    return appliedCoupons.some(
+      (coupon) => coupon.uniqueCode === couponData.uniqueCode
+    );
+  };
+
+  const calculateUpdatedPrice = (couponData: CouponModel): number => {
+    const { discountType, amount } = couponData;
+    return discountType === "amount"
+      ? priceBeforeCoupon - amount
+      : priceBeforeCoupon - (amount / 100) * priceBeforeCoupon;
+  };
+
+  const updateStateWithNewCoupon = (
+    couponData: CouponModel,
+    updatedPrice: number
+  ) => {
+    setPriceBeforeCoupon(updatedPrice);
+    setUpdatedPriceState(updatedPrice);
+    setAppliedCoupons([...appliedCoupons, couponData]);
+    notificationService.success("Coupon has successfully applied!");
+    resetField("couponId");
+  };
+
+  const onBuyClick = async () => {
+    try {
+      couponService.updateCoupons(appliedCoupons);
+    } catch (error) {
+      notificationService.error("Something went wrong");
+      console.error(error);
+    }
+  };
+
+  const isApplyCouponDisabled =
+    appliedCoupons.length === 1 && !appliedCoupons[0].stackable;
 
   return (
     <Card variant="outlined">
@@ -82,48 +137,67 @@ export default function PropCard() {
             alignItems: "flex-start",
           }}
         >
-          <Typography variant="h5">90$</Typography>
+          {originalPrice !== updatedPriceState && (
+            <Typography variant="h5">{updatedPriceState}$</Typography>
+          )}
           <Typography
-            color="textDisabled"
-            sx={{ textDecoration: "line-through" }}
+            color={originalPrice !== updatedPriceState && "textDisabled"}
+            sx={{
+              textDecoration:
+                originalPrice !== updatedPriceState && "line-through",
+            }}
           >
-            100$
+            {originalPrice}$
           </Typography>
         </Box>
-        <FormControl>
-          <Box sx={{ display: "flex", justifyContent: "left" }}>
-            <FormLabel htmlFor="coupon">Coupon Code</FormLabel>
-          </Box>
-          <Stack direction="row" spacing={1}>
-            <TextField
-              error={passwordError}
-              helperText={passwordErrorMessage}
-              name="Coupon"
-              placeholder="••••••"
-              type="coupon"
-              id="coupon"
-              autoComplete="current-password"
-              autoFocus
-              required
-              fullWidth
-              variant="outlined"
-              color={passwordError ? "error" : "primary"}
-            />
-            <Button
-              sx={{
-                color: "white",
-                bgcolor: "orange",
-                whiteSpace: "nowrap",
-                padding: "0px 25px",
-              }}
-              onClick={validateInputs}
-            >
-              Apply Coupon
-            </Button>
-          </Stack>
-        </FormControl>
+        <Tooltip
+          title={
+            isApplyCouponDisabled ? "Non stackable coupon was applied" : ""
+          }
+        >
+          <FormControl>
+            <Box sx={{ display: "flex", justifyContent: "left" }}>
+              <FormLabel htmlFor="coupon">Coupon Code</FormLabel>
+            </Box>
+            <Stack direction="row" spacing={1}>
+              <TextField
+                // error={passwordError}
+                // helperText={passwordErrorMessage}
+                name="Coupon"
+                placeholder="••••••"
+                type="coupon"
+                id="coupon"
+                autoComplete="current-password"
+                autoFocus
+                required
+                disabled={isApplyCouponDisabled}
+                fullWidth
+                variant="outlined"
+                {...register("couponId")}
+                // color={passwordError ? "error" : "primary"}
+              />
+              <Button
+                sx={{
+                  color: "white",
+                  bgcolor: "orange",
+                  whiteSpace: "nowrap",
+                  padding: "0px 25px",
+                }}
+                disabled={isApplyCouponDisabled}
+                onClick={handleSubmit(applyCoupon)}
+              >
+                Apply Coupon
+              </Button>
+            </Stack>
+          </FormControl>
+        </Tooltip>
 
-        <Button type="submit" fullWidth variant="contained">
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={onBuyClick}
+        >
           Buy Now
         </Button>
       </Box>
