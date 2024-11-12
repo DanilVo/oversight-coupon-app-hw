@@ -62,7 +62,7 @@ export default function CouponsGrid() {
 
   const handleDelete = (id: GridRowId) => async () => {
     try {
-      if (confirm("Are you sure?")) {
+      if (confirm("Are you sure?")) {        
         await couponService.deleteCoupon(String(id));
         const remainingCoupons = coupons.filter((coupon) => coupon.id !== id);
         setCoupons(remainingCoupons);

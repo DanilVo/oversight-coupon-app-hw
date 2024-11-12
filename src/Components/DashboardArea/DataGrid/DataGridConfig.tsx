@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridColDef, GridRowId, GridRowParams } from "@mui/x-data-grid";
 import { MouseEventHandler } from "react";
 import CouponModel from "../../../Models/CouponModel";
 
@@ -8,11 +8,11 @@ import CouponModel from "../../../Models/CouponModel";
   Functionality that is presented in this helper: 
   - Definitions for MUI DataGrid
 */
-export const couponFields: GridColDef[] = (
+export const couponFields = (
   setOpenModal: (x: boolean) => void,
   setCoupon: (c: CouponModel) => void,
-  handleDelete: (t: number) => MouseEventHandler<HTMLButtonElement>
-) => [
+  handleDelete: (t: GridRowId) => MouseEventHandler<HTMLButtonElement>
+): GridColDef[] => [
   {
     field: "description",
     headerName: "Description",
@@ -57,7 +57,7 @@ export const couponFields: GridColDef[] = (
   {
     field: "uniqueCode",
     headerName: "Unique Code",
-    width: 140,
+    width: 120,
   },
   { field: "valid", headerName: "Valid", width: 60 },
   {
@@ -66,11 +66,10 @@ export const couponFields: GridColDef[] = (
     headerName: "Actions",
     width: 120,
     cellClassName: "actions",
-    getActions: (gridRowObj: { row: CouponModel; id: number }) => [
+    getActions: (gridRowObj: GridRowParams<CouponModel>) => [
       <GridActionsCellItem
         icon={<EditIcon />}
         label="Edit"
-        className="textPrimary"
         onClick={() => {
           setOpenModal(true);
           setCoupon(gridRowObj.row);

@@ -38,6 +38,8 @@ class CouponService {
   }
 
   public async deleteCoupon(couponId: string): Promise<void> {
+    console.log(appConfig.couponsUrl + couponId);
+    
     await axios.delete(appConfig.couponsUrl + couponId);
   }
 
