@@ -7,7 +7,11 @@ class CouponService {
   public async getAllCoupons(): Promise<CouponModel[]> {
     const { data } = await axios.get(appConfig.couponsUrl);
     data.forEach((d: CouponModel) => {
-      d.valid = moment().isBefore(d.expiryDate) && d.usageLimit > 0;
+      const expiryDate = moment(d.expiryDate, moment.ISO_8601, true);
+      d.valid =
+        expiryDate.isValid() &&
+        expiryDate.isAfter(moment()) &&
+        d.usageLimit > 0;
     });
     return data;
   }
@@ -18,11 +22,12 @@ class CouponService {
 
   public async updateCoupon(
     coupon: CouponModel,
-    couponId: number
+    couponId: string
   ): Promise<void> {
     await axios.patch(appConfig.couponsUrl + couponId, coupon);
   }
 
+  // Because of json-server limitation we can’t perform updateMany operation at once, so we have to do loop
   public async updateCoupons(coupons: CouponModel[]): Promise<void> {
     for (const coupon of coupons) {
       await axios.patch(appConfig.couponsUrl + coupon.id, {
@@ -36,9 +41,11 @@ class CouponService {
     await axios.delete(appConfig.couponsUrl + couponId);
   }
 
-  public async getCoupon(couponId: string): Promise<CouponModel> {
-    const { data } = await axios.get(appConfig.couponsUrl + couponId);
-    return data;
+  public async getCoupon(uniqueCode: string): Promise<CouponModel> {
+    const { data } = await axios.get(
+      appConfig.couponsUrl + `?uniqueCode=${uniqueCode}`
+    );
+    return data[0];
   }
 }
 

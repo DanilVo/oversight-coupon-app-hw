@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid2 } from "@mui/material";
 import { useState } from "react";
 import UserModel from "../../../Models/UserModel";
 import userService from "../../../Services/UserService";
@@ -21,7 +21,7 @@ function AdminDashboard(): JSX.Element {
   };
   return (
     <Box className="AllReports" maxWidth="lg" sx={{ m: "auto", mt: 3 }}>
-      <Grid container>
+      <Grid2 container>
         <Button sx={{ ml: "auto" }} onClick={() => setOpenInviteModal(true)}>
           Add admin
         </Button>
@@ -30,10 +30,10 @@ function AdminDashboard(): JSX.Element {
           openInviteModal={openInviteModal}
           setOpenInviteModal={setOpenInviteModal}
         />
-        <Grid item xs={12} sm={12}>
+        <Grid2>
           <CouponsGrid />
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </Box>
   );
 }

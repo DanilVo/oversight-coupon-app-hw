@@ -2,6 +2,7 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Radio,
   RadioGroup,
@@ -44,13 +45,15 @@ interface Props {
 
 export default function CouponModal(props: Props) {
   const { openModal, coupon, onSubmit, isEdit, onModalClose } = props;
-  const { register, setValue, handleSubmit, reset } = useForm<CouponModel>();
-
-  // useEffect(() => {
-
+  const { register, setValue, handleSubmit, reset, formState } =
+    useForm<CouponModel>();
+  const { errors } = formState;
   if (isEdit) {
     setValue("description", coupon?.description);
-    setValue("creationDate", moment(coupon?.creationDate).format("YYYY-MM-DD"));
+    setValue(
+      "creationDate",
+      moment(coupon?.creationDate).format("YYYY-MM-DD HH:mm:ss")
+    );
     setValue("expiryDate", moment(coupon?.expiryDate).format("YYYY-MM-DD"));
     setValue("createdBy", coupon?.createdBy);
     setValue("discountType", coupon?.discountType);
@@ -60,11 +63,10 @@ export default function CouponModal(props: Props) {
     setValue("amount", coupon?.amount);
     setValue("usageLimit", coupon?.usageLimit);
   } else {
-    setValue("creationDate", moment().format("YYYY-MM-DD"));
+    setValue("creationDate", moment().format("YYYY-MM-DD HH:mm:ss"));
     setValue("createdBy", authStore.getState().user?.id);
     setValue("uniqueCode", crypto.randomUUID());
   }
-  // }, [isEdit, coupon, setValue]);
 
   return (
     <div>
@@ -82,30 +84,35 @@ export default function CouponModal(props: Props) {
             {isEdit ? "Edit Coupon" : "Add new coupon"}
           </Typography>
           <TextField
-            required
             sx={{ mt: 2 }}
             type="text"
             label="Description:"
             variant="outlined"
-            {...register("description")}
+            helperText={errors.description?.message}
+            {...register("description", {
+              required: { value: true, message: "Description is required" },
+              minLength: { value: 5, message: "Description is to short" },
+            })}
           />
           <TextField
             disabled
             sx={{ mt: 2 }}
             label="Creation Date:"
-            type="date"
+            type="datetime-local"
             variant="outlined"
             focused
             {...register("creationDate")}
           />
           <TextField
-            required
             sx={{ mt: 2 }}
             label="Expiry Date:"
             type="date"
             variant="outlined"
             focused
-            {...register("expiryDate")}
+            helperText={errors.expiryDate?.message}
+            {...register("expiryDate", {
+              required: { value: true, message: "Date is required" },
+            })}
           />
           <TextField
             disabled
@@ -117,20 +124,29 @@ export default function CouponModal(props: Props) {
             {...register("createdBy")}
           />
           <TextField
-            required
             sx={{ mt: 2 }}
             label="Usage Limit:"
             type="number"
             variant="outlined"
-            {...register("usageLimit", { setValueAs: (v) => parseInt(v) })}
+            helperText={errors.usageLimit?.message}
+            {...register("usageLimit", {
+              setValueAs: (v) => parseInt(v),
+              required: { value: true, message: "Limit usage is required" },
+              min: { value: 1, message: "Limit usage should be 1 or more" },
+            })}
           />
           <TextField
-            required
             sx={{ mt: 2 }}
             label="Amount:"
             type="number"
             variant="outlined"
-            {...register("amount", { setValueAs: (v) => parseInt(v) })}
+            helperText={errors.amount?.message}
+            {...register("amount", {
+              setValueAs: (v) => parseInt(v),
+              required: { value: true, message: "Amount is required" },
+              min: { value: 1, message: "Amount should be greater that 1" },
+              max: { value: 99, message: "Amount should be less that 99" },
+            })}
           />
           <TextField
             disabled
@@ -153,15 +169,20 @@ export default function CouponModal(props: Props) {
                 value="true"
                 control={<Radio />}
                 label="Yes"
-                {...register("stackable")}
+                {...register("stackable", {
+                  required: "Please select an option",
+                })}
               />
               <FormControlLabel
                 value="false"
                 control={<Radio />}
                 label="No"
-                {...register("stackable")}
+                {...register("stackable", {
+                  required: "Please select an option",
+                })}
               />
             </RadioGroup>
+            <FormHelperText>{errors.stackable?.message}</FormHelperText>
           </FormControl>
 
           <FormControl>
@@ -183,9 +204,12 @@ export default function CouponModal(props: Props) {
                 value="amount"
                 control={<Radio />}
                 label="Amount"
-                {...register("discountType")}
+                {...register("discountType", {
+                  required: "Please select an option",
+                })}
               />
             </RadioGroup>
+            <FormHelperText>{errors.discountType?.message}</FormHelperText>
           </FormControl>
           <Button
             sx={{ mt: 2 }}
@@ -193,6 +217,7 @@ export default function CouponModal(props: Props) {
             onClick={handleSubmit((c) => {
               reset();
               onSubmit(c);
+              onModalClose();
             })}
             variant="contained"
           >

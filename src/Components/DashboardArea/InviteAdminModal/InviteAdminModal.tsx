@@ -32,7 +32,9 @@ interface Props {
 
 export default function InviteAdminModal(props: Props) {
   const { onSubmit, openInviteModal, setOpenInviteModal } = props;
-  const { register, setValue, handleSubmit, reset } = useForm<UserModel>();
+  const { register, setValue, handleSubmit, reset, formState } =
+    useForm<UserModel>();
+  const { errors } = formState;
 
   setValue("password", crypto.randomUUID().substring(0, 8));
   setValue("id", crypto.randomUUID());
@@ -53,28 +55,50 @@ export default function InviteAdminModal(props: Props) {
             Create admin
           </Typography>
           <TextField
-            required
             sx={{ mt: 2 }}
             type="text"
             label="First name:"
             variant="outlined"
-            {...register("firstName")}
+            {...register("firstName", {
+              required: { value: true, message: "First name is required" },
+              minLength: { value: 2, message: "First name is to short" },
+              pattern: {
+                value: /^[A-Za-z]+$/,
+                message:
+                  "First name can not contain numbers or special characters",
+              },
+            })}
+            helperText={errors.firstName?.message}
           />
           <TextField
             sx={{ mt: 2 }}
             label="Last name:"
             type="text"
             variant="outlined"
-            required
-            {...register("lastName")}
+            {...register("lastName", {
+              required: { value: true, message: "Last name is required" },
+              minLength: { value: 2, message: "Last name is to short" },
+              pattern: {
+                value: /^[A-Za-z]+$/,
+                message:
+                  "Last name can not contain numbers or special characters",
+              },
+            })}
+            helperText={errors.lastName?.message}
           />
           <TextField
-            required
             sx={{ mt: 2 }}
             label="Email:"
             type="email"
             variant="outlined"
-            {...register("email")}
+            {...register("email", {
+              required: { value: true, message: "Email is required" },
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Please enter valid email",
+              },
+            })}
+            helperText={errors.email?.message}
           />
           <TextField
             disabled

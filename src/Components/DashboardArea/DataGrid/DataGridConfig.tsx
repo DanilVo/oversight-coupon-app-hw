@@ -27,10 +27,10 @@ export const couponFields: GridColDef[] = (
     field: "expiryDate",
     headerName: "Expiry Date",
     width: 120,
-  }, 
+  },
   {
     field: "createdBy",
-    headerName: "Created By", 
+    headerName: "Created By",
     width: 120,
   },
   {
@@ -66,7 +66,7 @@ export const couponFields: GridColDef[] = (
     headerName: "Actions",
     width: 120,
     cellClassName: "actions",
-    getActions: (gridRowObj) => [
+    getActions: (gridRowObj: { row: CouponModel; id: number }) => [
       <GridActionsCellItem
         icon={<EditIcon />}
         label="Edit"

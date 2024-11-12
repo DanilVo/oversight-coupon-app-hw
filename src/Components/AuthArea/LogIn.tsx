@@ -40,7 +40,8 @@ export default function LogIn() {
 
   const userInfo: UserModel = authStore.getState().user;
 
-  const { register, handleSubmit, formState, reset } = useForm<CredentialsModel>();
+  const { register, handleSubmit, formState, reset } =
+    useForm<CredentialsModel>();
   const { errors } = formState;
 
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ export default function LogIn() {
     try {
       await authService.logIn(credentials);
       notificationService.success("Welcome aboard");
-      reset()
+      reset();
       handleClose();
       navigate("/dashboard");
     } catch (error) {
@@ -123,7 +124,6 @@ export default function LogIn() {
                 autoFocus
                 fullWidth
                 variant="outlined"
-                // color={emailError ? "error" : "primary"}
                 sx={{ ariaLabel: "email" }}
               />
             </FormControl>
@@ -144,7 +144,6 @@ export default function LogIn() {
                 autoComplete="current-password"
                 fullWidth
                 variant="outlined"
-                // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             <Button type="submit" fullWidth variant="contained">

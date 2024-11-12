@@ -39,14 +39,9 @@ export default function PropCard() {
   const [priceBeforeCoupon, setPriceBeforeCoupon] =
     useState<number>(originalPrice);
 
-  // const [emailError, setEmailError] = useState(false);
-  // const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  // const [passwordError, setPasswordError] = useState(false);
-  // const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-
-  const applyCoupon = async (values: { [couponId: string]: string }) => {
+  const applyCoupon = async (values: { [uniqueCode: string]: string }) => {
     try {
-      const couponData = await fetchCouponData(values.couponId);
+      const couponData = await fetchCouponData(values.uniqueCode);
       if (!validateCoupon(couponData)) return;
 
       const updatedPrice = calculateUpdatedPrice(couponData);
@@ -57,14 +52,14 @@ export default function PropCard() {
     }
   };
 
-  const fetchCouponData = async (couponId: string) => {
-    const couponData: CouponModel = await couponService.getCoupon(couponId);
+  const fetchCouponData = async (uniqueCode: string) => {
+    const couponData: CouponModel = await couponService.getCoupon(uniqueCode);
     return couponData;
   };
 
   const validateCoupon = (couponData: CouponModel): boolean => {
     const isCouponValid =
-      moment().isBefore(couponData.expiryDate) && couponData.usageLimit > 0;
+      moment().isBefore(couponData?.expiryDate) && couponData?.usageLimit > 0;
     if (!isCouponValid) {
       notificationService.error("Coupon is not valid!");
       return false;
@@ -101,12 +96,16 @@ export default function PropCard() {
     setUpdatedPriceState(updatedPrice);
     setAppliedCoupons([...appliedCoupons, couponData]);
     notificationService.success("Coupon has successfully applied!");
-    resetField("couponId");
+    resetField("uniqueCode");
   };
 
   const onBuyClick = async () => {
     try {
       couponService.updateCoupons(appliedCoupons);
+      setPriceBeforeCoupon(originalPrice);
+      setUpdatedPriceState(originalPrice);
+      setAppliedCoupons([]);
+      alert("JK it`s only hw project 🤣");
     } catch (error) {
       notificationService.error("Something went wrong");
       console.error(error);
@@ -140,11 +139,14 @@ export default function PropCard() {
           {originalPrice !== updatedPriceState && (
             <Typography variant="h5">{updatedPriceState}$</Typography>
           )}
+
           <Typography
-            color={originalPrice !== updatedPriceState && "textDisabled"}
+            color={
+              originalPrice !== updatedPriceState ? "textDisabled" : "inherit"
+            }
             sx={{
               textDecoration:
-                originalPrice !== updatedPriceState && "line-through",
+                originalPrice !== updatedPriceState ? "line-through" : "none",
             }}
           >
             {originalPrice}$
@@ -161,8 +163,6 @@ export default function PropCard() {
             </Box>
             <Stack direction="row" spacing={1}>
               <TextField
-                // error={passwordError}
-                // helperText={passwordErrorMessage}
                 name="Coupon"
                 placeholder="••••••"
                 type="coupon"
@@ -173,8 +173,7 @@ export default function PropCard() {
                 disabled={isApplyCouponDisabled}
                 fullWidth
                 variant="outlined"
-                {...register("couponId")}
-                // color={passwordError ? "error" : "primary"}
+                {...register("uniqueCode")}
               />
               <Button
                 sx={{

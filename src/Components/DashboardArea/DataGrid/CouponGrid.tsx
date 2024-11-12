@@ -63,7 +63,7 @@ export default function CouponsGrid() {
   const handleDelete = (id: GridRowId) => async () => {
     try {
       if (confirm("Are you sure?")) {
-        await couponService.deleteCoupon(id);
+        await couponService.deleteCoupon(String(id));
         const remainingCoupons = coupons.filter((coupon) => coupon.id !== id);
         setCoupons(remainingCoupons);
         notificationService.success("Coupon has been deleted!");
@@ -93,7 +93,7 @@ export default function CouponsGrid() {
       await couponService.addCoupon({
         ...newCoupon,
         id: uuid,
-        stackable: newCoupon.stackable === "true",
+        stackable: newCoupon.stackable,
       });
       setOpenModal(false);
       fetchCouponData();
@@ -108,7 +108,7 @@ export default function CouponsGrid() {
   };
 
   return (
-    <Box sx={{ height: '80vh', width: '100wv' }}>
+    <Box sx={{ height: "80vh", width: "100wv" }}>
       <DataGrid
         rows={coupons}
         loading={!coupons || !userInfo}
@@ -127,7 +127,6 @@ export default function CouponsGrid() {
       />
       <CouponModal
         openModal={openModal}
-        setOpenModal={setOpenModal}
         coupon={coupon}
         isEdit={isEdit}
         onSubmit={isEdit ? updateCoupon : addCoupon}

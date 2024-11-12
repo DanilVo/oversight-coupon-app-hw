@@ -43,7 +43,13 @@ function Header(): JSX.Element {
     <AppBar position="static">
       <Container
         maxWidth="xl"
-        sx={{ display: "flex", justifyContent: "space-between" }}
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: { xs: 1, sm: 0 },
+        }}
       >
         <Box
           component="img"
@@ -52,7 +58,13 @@ function Header(): JSX.Element {
           sx={{ height: 120, width: 200 }}
           onClick={() => navigate("/home")}
         />
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column-reverse", sm: "row" },
+          }}
+        >
           {userInfo && (
             <Button
               sx={{ bgcolor: "orange", mr: 2 }}
@@ -68,7 +80,7 @@ function Header(): JSX.Element {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-around",
-              width: 250,
+              width: 300,
               height: 70,
               mr: 2,
               borderRadius: 3,
