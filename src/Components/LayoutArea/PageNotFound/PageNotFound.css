@@ -1,5 +1,6 @@
-.PageNotFound>img {
-    width: 100%;
-    vertical-align: middle;
-    
+.PageNotFound > img {
+  width: 100%;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }

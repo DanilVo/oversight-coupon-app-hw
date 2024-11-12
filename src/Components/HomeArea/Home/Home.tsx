@@ -1,8 +1,10 @@
 import { Box, Stack } from "@mui/material";
 import Content from "../../UserArea/Content";
 import PropCard from "../../UserArea/PropCard";
+import useTitle from "../../../Utils/useTitle";
 
 function Home(): JSX.Element {
+  useTitle('Home')
   return (
     <Box className="Home">
       <Stack

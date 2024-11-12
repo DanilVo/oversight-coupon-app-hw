@@ -13,7 +13,6 @@ import logo from "../../../assets/oneItemShop-logo-removebg-preview.png";
 import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import LogIn from "../../AuthArea/LogIn";
-import "./Header.css";
 
 function Header(): JSX.Element {
   const { pathname } = useLocation();
