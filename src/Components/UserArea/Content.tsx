@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import ps5 from "../../Assets/ps5-removebg-preview.png";
+import ps5 from "../../Assets/ps5.png";
 
 export default function Content() {
   return (
