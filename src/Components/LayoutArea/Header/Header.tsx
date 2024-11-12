@@ -1,20 +1,22 @@
 import {
   AppBar,
   Box,
+  Button,
   Container,
   Paper,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/oneItemShop-logo-removebg-preview.png";
+import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import LogIn from "../../AuthArea/LogIn";
 import "./Header.css";
-import UserModel from "../../../Models/UserModel";
 
 function Header(): JSX.Element {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserModel>();
   const userFromStore = authStore.getState().user;
@@ -28,6 +30,14 @@ function Header(): JSX.Element {
 
     return () => unsubscribe();
   }, [userFromStore]);
+
+  const onNavigateClick = () => {
+    if (pathname === "/home") {
+      navigate("/dashboard");
+    } else {
+      navigate("/home");
+    }
+  };
 
   return (
     <AppBar position="static">
@@ -43,6 +53,15 @@ function Header(): JSX.Element {
           onClick={() => navigate("/home")}
         />
         <Toolbar disableGutters>
+          {userInfo && (
+            <Button
+              sx={{ bgcolor: "orange", mr: 2 }}
+              variant="contained"
+              onClick={onNavigateClick}
+            >
+              {pathname === "/home" ? "Dashboard" : "Home"}
+            </Button>
+          )}
           <Paper
             elevation={8}
             sx={{

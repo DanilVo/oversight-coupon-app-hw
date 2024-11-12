@@ -7,7 +7,7 @@ export default class CouponModel {
   public discountType: string;
   public expiryDate: Date | string;
   public creationDate: Date | string;
-  public createdBy: number;
+  public createdBy: string;
   public uniqueCode: string;
   public valid: boolean;
 }

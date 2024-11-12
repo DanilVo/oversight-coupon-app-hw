@@ -4,6 +4,10 @@ import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { MouseEventHandler } from "react";
 import CouponModel from "../../../Models/CouponModel";
 
+/*
+  Functionality that is presented in this helper: 
+  - Definitions for MUI DataGrid
+*/
 export const couponFields: GridColDef[] = (
   setOpenModal: (x: boolean) => void,
   setCoupon: (c: CouponModel) => void,

@@ -40,12 +40,8 @@ export default function LogIn() {
 
   const userInfo: UserModel = authStore.getState().user;
 
-  const { register, handleSubmit } = useForm<CredentialsModel>();
-
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const { register, handleSubmit, formState, reset } = useForm<CredentialsModel>();
+  const { errors } = formState;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -58,34 +54,13 @@ export default function LogIn() {
     try {
       await authService.logIn(credentials);
       notificationService.success("Welcome aboard");
+      reset()
       handleClose();
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
-
-      notificationService.error("something went wrong");
+      notificationService.error("User not found");
+      console.error(error);
     }
-
-    // const email = document.getElementById('email') as HTMLInputElement;
-    // const password = document.getElementById('password') as HTMLInputElement;
-    // let isValid = true;
-    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-    //   setEmailError(true);
-    //   setEmailErrorMessage('Please enter a valid email address.');
-    //   isValid = false;
-    // } else {
-    //   setEmailError(false);
-    //   setEmailErrorMessage('');
-    // }
-    // if (!password.value || password.value.length < 6) {
-    //   setPasswordError(true);
-    //   setPasswordErrorMessage('Password must be at least 6 characters long.');
-    //   isValid = false;
-    // } else {
-    //   setPasswordError(false);
-    //   setPasswordErrorMessage('');
-    // }
-    // return isValid;
   }
 
   const handleLogout = () => {
@@ -132,19 +107,23 @@ export default function LogIn() {
                 Email
               </FormLabel>
               <TextField
-                {...register("email")}
-                error={emailError}
-                helperText={emailErrorMessage}
+                {...register("email", {
+                  required: { value: true, message: "Email is required" },
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "Please enter valid email",
+                  },
+                })}
+                helperText={errors.email?.message}
                 id="email"
                 type="email"
                 name="email"
                 placeholder="your@email.com"
                 autoComplete="email"
                 autoFocus
-                required
                 fullWidth
                 variant="outlined"
-                color={emailError ? "error" : "primary"}
+                // color={emailError ? "error" : "primary"}
                 sx={{ ariaLabel: "email" }}
               />
             </FormControl>
@@ -153,18 +132,19 @@ export default function LogIn() {
                 <FormLabel htmlFor="password">Password</FormLabel>
               </Box>
               <TextField
-                {...register("password")}
-                error={passwordError}
-                helperText={passwordErrorMessage}
+                {...register("password", {
+                  required: { value: true, message: "Password is required!" },
+                  minLength: { value: 8, message: "Incorrect password!" },
+                })}
+                helperText={errors.password?.message}
                 name="password"
                 placeholder="••••••"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? "error" : "primary"}
+                // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             <Button type="submit" fullWidth variant="contained">

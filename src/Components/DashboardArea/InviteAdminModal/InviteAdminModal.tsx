@@ -5,6 +5,11 @@ import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import UserModel from "../../../Models/UserModel";
 
+/*
+  Functionality that is presented in this component: 
+  - Modal for admin creation
+*/
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -29,7 +34,7 @@ export default function InviteAdminModal(props: Props) {
   const { onSubmit, openInviteModal, setOpenInviteModal } = props;
   const { register, setValue, handleSubmit, reset } = useForm<UserModel>();
 
-  setValue("password", crypto.randomUUID().substring(0, 10));
+  setValue("password", crypto.randomUUID().substring(0, 8));
   setValue("id", crypto.randomUUID());
 
   return (

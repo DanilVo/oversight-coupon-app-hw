@@ -1,50 +1,100 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Coupon Management Application
 
-Currently, two official plugins are available:
+This project is a web application built using **Vite + React** for the front end and **JSON Server** for the backend. The application is designed for **CRUD operations on coupons**, user management, and coupon application. It includes both an **admin interface** for managing users and coupons and a **user interface** for applying discounts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### User Management (Admin)
+- **Admin Access Only**:
+  - Only admins can create new users.
+- **User Registration**:
+  - Admins can create new users with a username and password.
+- **User Login**:
+  - Registered users can log in using their credentials.
+- **User Logout**:
+  - Logged-in users can log out from their accounts.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Coupon Management (Coupons)
+- **Admin Privileges**:
+  - Admins can view, add, edit, and delete coupons.
+- **Coupon Application**:
+  - Users can enter a coupon code to receive a discount and view the total order amount after applying the coupon.
+  - Users can enter multiple coupon codes, where applicable.
+- **Coupon Details**:
+  - Coupons include a code that is kept secret and is the only way to apply the coupon.
+  - Each coupon has a description visible only to admins.
+  - Coupons store the ID of the user who created them, as well as the creation date and time.
+- **Discount Options**:
+  - Coupons can provide a discount in either a percentage or a fixed amount.
+  - Some coupons may have expiration dates.
+  - Some coupons allow "stacking" with other coupons, while others do not.
+  - Some coupons have a usage limit, restricting the number of times they can be used.
 
-- Configure the top-level `parserOptions` property like this:
+### Reporting (Reports)
+- **Coupon Usage Tracking**:
+  - The reporting system allows tracking coupon usage for analysis and insight into coupon use.
+- **Admin Reports**:
+  - View a list of coupons created by a specific user.
+  - View a list of coupons created within a specified date range.
+  - Export coupon lists to Excel for further analysis.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Getting Started
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Prerequisites
+- Node.js and npm installed
+- JSON Server installed
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/DanilVo/oversight-cupon-app-hw.git
+   cd coupon-management-app
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start JSON Server:
+   ```bash
+   npm run json-server
+   ```
+
+4. Start the application:
+   ```bash
+   npm run dev
+   ```
+
+### Configuration
+- The application assumes JSON-Server is running on `localhost:3000`. Adjust configurations if necessary in the `src/config.js` file.
+
+### Usage
+- Admin users can log in and access the admin dashboard to manage users and coupons.
+- Regular users can log in to apply coupon codes to their orders.
+
+## Technologies Used
+- **Frontend**: Vite + React
+- **Backend**: JSON-Server
+- **Data Export**: Excel-compatible format
+
+## Contributing
+1. Fork the repository.
+2. Create your feature branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add YourFeature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open a pull request.
+
+---
+
+This README should provide a clear guide for developers and users alike, covering key aspects of functionality, setup, and usage.

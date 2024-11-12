@@ -34,9 +34,7 @@ function authReducer(
 
     case AuthActionTypes.GetUser: {
       delete action.payload.password;
-      newState.user = action.payload;
-      console.log("redux " +newState); 
-      
+      newState.user = action.payload;      
       break;
     }
 

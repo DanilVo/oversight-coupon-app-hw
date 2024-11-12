@@ -17,8 +17,7 @@ import { authStore } from "../../../Redux/AuthState";
 
 /*
   Functionality that is presented in this component: 
-  - Add coupon
-  - Edit coupon
+  - Modal for creation and edit of the coupons 
 */
 
 const style = {
@@ -48,7 +47,6 @@ export default function CouponModal(props: Props) {
   const { register, setValue, handleSubmit, reset } = useForm<CouponModel>();
 
   // useEffect(() => {
-  // console.log("isEdit " + isEdit);
 
   if (isEdit) {
     setValue("description", coupon?.description);
