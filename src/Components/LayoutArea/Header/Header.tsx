@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../../../assets/oneItemShop-logo-removebg-preview.png";
+import logo from "../../../Assets/oneItemShop-logo.png";
 import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import LogIn from "../../AuthArea/LogIn";

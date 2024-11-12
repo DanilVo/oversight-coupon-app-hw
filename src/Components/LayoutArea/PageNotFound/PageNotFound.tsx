@@ -1,5 +1,5 @@
 import "./PageNotFound.css";
-import notFound from "../../../Assets/not_found-removebg-preview.png";
+import notFound from "../../../Assets/not_found.png";
 import useTitle from "../../../Utils/useTitle";
 
 function PageNotFound(): JSX.Element {
