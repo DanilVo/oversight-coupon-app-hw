@@ -1,8 +1,13 @@
 import axios from "axios";
-import appConfig from "../Utils/AppConfig";
 import CredentialsModel from "../Models/CredentialsModel";
-import { AuthAction, AuthActionTypes, authStore } from "../Redux/AuthState";
-import UserModel from "../Models/UserModel";
+import { AuthAction, ActionTypes, authStore } from "../Redux/AuthState";
+import appConfig from "../Utils/AppConfig";
+
+/*
+  Functionality that is presented in this service: 
+  - Login
+  - Logout
+*/
 
 class AuthService {
   public async logIn(credentials: CredentialsModel): Promise<void> {
@@ -11,24 +16,14 @@ class AuthService {
         `?email=${credentials.email}&password=${credentials.password}`
     );
     const authAction: AuthAction = {
-      type: AuthActionTypes.Login,
+      type: ActionTypes.Login,
       payload: data,
     };
     authStore.dispatch(authAction);
-  }
-
-  public async getSingleUser(id: string): Promise<UserModel> {
-    const { data } = await axios.get(appConfig.usersUrl + id);
-    const authAction: AuthAction = {
-      type: AuthActionTypes.GetUser,
-      payload: data,
-    };
-    authStore.dispatch(authAction);
-    return data;
   }
 
   public logout(): void {
-    const action: AuthAction = { type: AuthActionTypes.Logout };
+    const action: AuthAction = { type: ActionTypes.Logout };
     authStore.dispatch(action);
   }
 }

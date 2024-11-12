@@ -4,7 +4,8 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 import UserModel from "../../../Models/UserModel";
-
+import { v4 as uuidv4 } from "uuid";
+ 
 /*
   Functionality that is presented in this component: 
   - Modal for admin creation
@@ -36,8 +37,8 @@ export default function InviteAdminModal(props: Props) {
     useForm<UserModel>();
   const { errors } = formState;
 
-  setValue("password", crypto.randomUUID().substring(0, 8));
-  setValue("id", crypto.randomUUID());
+  setValue("password", uuidv4().substring(0, 8));
+  setValue("id", uuidv4());
 
   return (
     <div>

@@ -1,5 +1,10 @@
 import { toast } from "react-toastify";
 
+
+/*
+  Functionality that is presented in this service: 
+  - Notifications popups
+*/
 class NotificationService {
   public success(message: string): void {
     toast.success(message, {

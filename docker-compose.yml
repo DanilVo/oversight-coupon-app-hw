@@ -1,0 +1,19 @@
+services:
+  frontend:
+    image: danilvo/oversight-coupon-app:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # For the Nginx server
+      - "5173:5173" # For Vite's dev server
+    depends_on:
+      - json-server
+
+  json-server:
+    image: danilvo/oversight-coupon-app-json-server:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.json-server
+    ports:
+      - "4000:4000" # Expose json-server on localhost:4000

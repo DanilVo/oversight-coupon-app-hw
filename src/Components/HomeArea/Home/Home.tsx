@@ -3,6 +3,12 @@ import Content from "../../UserArea/Content";
 import PropCard from "../../UserArea/PropCard";
 import useTitle from "../../../Utils/useTitle";
 
+/*
+  Functionality that is presented in this component: 
+  - Display product image
+  - Coupon input card
+*/
+
 function Home(): JSX.Element {
   useTitle('Home')
   return (

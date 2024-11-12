@@ -1,0 +1,17 @@
+# Use a stable Node image
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy db.json to the working directory
+COPY ./data/db.json /app/db.json
+
+# Install json-server globally
+RUN npm install -g json-server
+
+# Expose the port json-server will run on
+EXPOSE 4000
+
+# Command to run json-server
+CMD ["json-server", "--watch", "/app/db.json", "--port", "4000"]

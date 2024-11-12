@@ -1,11 +1,16 @@
 import { legacy_createStore as createStore } from "redux";
 import UserModel from "../Models/UserModel";
 
+/*
+  Functionality that is presented in this reducer: 
+  - Setting coupon state 
+*/
+
 class AuthState {
   public user: UserModel = null;
 }
 
-export enum AuthActionTypes {
+export enum ActionTypes {
   Login = "Login",
   Logout = "Logout",
   NewUser = "NewUser",
@@ -13,7 +18,7 @@ export enum AuthActionTypes {
 }
 
 export interface AuthAction {
-  type: AuthActionTypes;
+  type: ActionTypes;
   payload?: any;
 }
 
@@ -24,7 +29,7 @@ function authReducer(
   const newState = { ...currentState };
 
   switch (action.type) {
-    case AuthActionTypes.Login: {
+    case ActionTypes.Login: {
       delete action.payload[0].password;
       newState.user = action.payload[0];
       const token = btoa(JSON.stringify(newState.user));
@@ -32,18 +37,18 @@ function authReducer(
       break;
     }
 
-    case AuthActionTypes.GetUser: {
+    case ActionTypes.GetUser: {
       delete action.payload.password;
       newState.user = action.payload;      
       break;
     }
 
-    case AuthActionTypes.Logout:
+    case ActionTypes.Logout:
       newState.user = null;
       localStorage.removeItem("token");
       break;
 
-    case AuthActionTypes.NewUser:
+    case ActionTypes.NewUser:
       break;
   }
 

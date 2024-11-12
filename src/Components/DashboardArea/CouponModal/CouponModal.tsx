@@ -15,6 +15,7 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import CouponModel from "../../../Models/CouponModel";
 import { authStore } from "../../../Redux/AuthState";
+import { v4 as uuidv4 } from "uuid";
 
 /*
   Functionality that is presented in this component: 
@@ -65,7 +66,7 @@ export default function CouponModal(props: Props) {
   } else {
     setValue("creationDate", moment().format("YYYY-MM-DD HH:mm:ss"));
     setValue("createdBy", authStore.getState().user?.id);
-    setValue("uniqueCode", crypto.randomUUID());
+    setValue("uniqueCode", uuidv4());
   }
 
   return (

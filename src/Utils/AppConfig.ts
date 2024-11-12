@@ -1,9 +1,8 @@
 class AppConfig {
-  public readonly couponsUrl: string =
-    "https://my-json-server.typicode.com/DanilVo/json-server-db/coupons/";
 
-  public readonly usersUrl: string =
-    "https://my-json-server.typicode.com/DanilVo/json-server-db/users/";
+  public readonly couponsUrl: string = "http://159.89.39.164:4000/coupons/";
+
+  public readonly usersUrl: string = "http://159.89.39.164:4000/users/";
 }
 
 // Singleton

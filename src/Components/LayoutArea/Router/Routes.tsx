@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import UserModel from "../../../Models/UserModel";
-import authService from "../../../Services/AuthService";
+import { authStore } from "../../../Redux/AuthState";
+import userService from "../../../Services/UserService";
 import AdminDashboard from "../../DashboardArea/AdminDashboard/AdminDashboard";
 import Home from "../../HomeArea/Home/Home";
 import PageNotFound from "../PageNotFound/PageNotFound";
-import { authStore } from "../../../Redux/AuthState";
+
+/*
+  Functionality that is presented in this route: 
+  - Conditional routing based on login status
+*/
 
 function Routing(): JSX.Element {
   const [userInfo, setUserInfo] = useState<UserModel>();
@@ -13,7 +18,7 @@ function Routing(): JSX.Element {
   const token = localStorage.getItem("token");
 
   const fetchUser = async (id: string) => {
-    await authService.getSingleUser(id);
+    await userService.getSingleUser(id);
   };
 
   useEffect(() => {

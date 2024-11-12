@@ -27,9 +27,9 @@ This project is a web application built using **Vite + React** for the front end
   - Coupons store the ID of the user who created them, as well as the creation date and time.
 - **Discount Options**:
   - Coupons can provide a discount in either a percentage or a fixed amount.
-  - Some coupons may have expiration dates.
+  - Coupons have expiration date.
   - Some coupons allow "stacking" with other coupons, while others do not.
-  - Some coupons have a usage limit, restricting the number of times they can be used.
+  - Coupons have a usage limit, restricting the number of times they can be used.
 
 ### Reporting (Reports)
 - **Coupon Usage Tracking**:
@@ -95,6 +95,9 @@ This project is a web application built using **Vite + React** for the front end
    ```
 5. Open a pull request.
 
----
 
-This README should provide a clear guide for developers and users alike, covering key aspects of functionality, setup, and usage.
+### Docker usage
+1. Pull frontend repository: docker pull danilvo/oversight-coupon-app.
+2. Pull json-server repository: docker pull danilvo/oversight-coupon-app-json-server.
+3. Run "docker-compose up" command.
+4. Paste "http://localhost:5173/home" URL in browser.

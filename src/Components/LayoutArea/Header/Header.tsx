@@ -14,6 +14,12 @@ import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import LogIn from "../../AuthArea/LogIn";
 
+/*
+  Functionality that is presented in this component: 
+  - Login/Logout button
+  - Navigation between dashboard and home pages if user signed in
+*/
+
 function Header(): JSX.Element {
   const { pathname } = useLocation();
   const navigate = useNavigate();

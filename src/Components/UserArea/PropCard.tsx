@@ -30,6 +30,13 @@ const Card = styled(MuiCard)(({ theme }) => ({
   borderRadius: "10px",
 }));
 
+/*
+  Functionality that is presented in this component: 
+  - Applying stackable/non stackable coupons
+  - Coupon validation 
+  - 
+*/
+
 export default function PropCard() {
   const originalPrice = 100;
   const [updatedPriceState, setUpdatedPriceState] =
@@ -105,7 +112,7 @@ export default function PropCard() {
       setPriceBeforeCoupon(originalPrice);
       setUpdatedPriceState(originalPrice);
       setAppliedCoupons([]);
-      alert("JK it`s only hw project 🤣");
+      alert("Joke it`s only homework project 🤣");
     } catch (error) {
       notificationService.error("Something went wrong");
       console.error(error);

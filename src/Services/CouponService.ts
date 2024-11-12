@@ -3,6 +3,11 @@ import CouponModel from "../Models/CouponModel";
 import appConfig from "../Utils/AppConfig";
 import moment from "moment";
 
+/*
+  Functionality that is presented in this service: 
+  - CRUD service operations on coupons
+*/
+
 class CouponService {
   public async getAllCoupons(): Promise<CouponModel[]> {
     const { data } = await axios.get(appConfig.couponsUrl);
@@ -37,9 +42,7 @@ class CouponService {
     }
   }
 
-  public async deleteCoupon(couponId: string): Promise<void> {
-    console.log(appConfig.couponsUrl + couponId);
-    
+  public async deleteCoupon(couponId: string): Promise<void> {    
     await axios.delete(appConfig.couponsUrl + couponId);
   }
 

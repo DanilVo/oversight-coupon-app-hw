@@ -14,6 +14,7 @@ import couponService from "../../../Services/CouponService";
 import notificationService from "../../../Services/NotificationService";
 import CouponModal from "../CouponModal/CouponModal";
 import { couponFields } from "./DataGridConfig";
+import { v4 as uuidv4 } from "uuid";
 
 /*
   Functionality that is presented in this component: 
@@ -89,7 +90,7 @@ export default function CouponsGrid() {
 
   const addCoupon = async (newCoupon: CouponModel) => {
     try {
-      const uuid = crypto.randomUUID();
+      const uuid = uuidv4();
       await couponService.addCoupon({
         ...newCoupon,
         id: uuid,
